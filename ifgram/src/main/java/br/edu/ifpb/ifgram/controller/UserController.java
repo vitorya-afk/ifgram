@@ -3,7 +3,7 @@ package br.edu.ifpb.ifgram.controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("Monik")
+@RequestMapping("User")
 public class UserController {
 
     @GetMapping
@@ -26,7 +26,5 @@ public class UserController {
     public String deletar(){
         return null;
     }
-
-
 
 }

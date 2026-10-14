@@ -42,4 +42,11 @@ public class UserService {
         }
         return listaUsuariosResponse;
     }
+    public UserResponse atualizarUsuario(UserRequest userRequest ){
+        User usuario = UserRepository.findByEmail(userRequest.email());
+        usuario.setNome(userRequest.nome());
+        repository.save(usuario);
+
+        return UserResponse.from(usuario);
+    }
 }

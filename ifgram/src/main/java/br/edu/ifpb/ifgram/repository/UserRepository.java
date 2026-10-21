@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import br.edu.ifpb.ifgram.model.User;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 
@@ -15,5 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
     @Query("select u from User u where u.email like concat('%', :dominio)")
     List<User> doDominio(String dominio);
+
+
 
 }

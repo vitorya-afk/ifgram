@@ -2,6 +2,7 @@ package br.edu.ifpb.ifgram.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.aspectj.weaver.bcel.ExceptionRange;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,20 +34,33 @@ public class UserService {
         List<User> listaUsuarios = repository.findAll();
         List<UserResponse> listaUsuariosResponse = new ArrayList<>();
         for(User user : listaUsuarios) {
-            UserResponse userReponse = new UserResponse(
+            UserResponse userResponse = new UserResponse(
                     user.getId(),
                     user.getNome(),
                     user.getEmail()
             );
-            listaUsuariosResponse.add(userReponse);
+            listaUsuariosResponse.add(userResponse);
         }
         return listaUsuariosResponse;
     }
-    public UserResponse atualizarUsuario(UserRequest userRequest ){
-        User usuario = UserRepository.findByEmail(userRequest.email());
-        usuario.setNome(userRequest.nome());
-        repository.save(usuario);
+    public UserResponse atualizarUsuario(UserRequest request) throws Exception {
+        Optional<User> usuario = repository.findByEmail(request.email());
+        if(usuario.isEmpty()){
+            throw new Exception("usuário não existe na base de dados.");
+        }
+        User usuarioSalvo = usuario.get();
+        usuarioSalvo.setNome(request.nome());
+        repository.save(usuarioSalvo);
 
-        return UserResponse.from(usuario);
+        return UserResponse.from(usuarioSalvo);
+    }
+    public void  deletarUsuario(UserRequest request) throws Exception{
+        Optional<User> usuario = repository.findByEmail(request.email());
+        if (usuario.isEmpty()) {
+            throw new Exception("usuário não encontrado.");
+        }
+        User usuarioDeletar = usuario.get();
+        repository.delete(usuarioDeletar);
+
     }
 }

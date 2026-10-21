@@ -32,12 +32,13 @@ public class UserController {
     }
 
     @DeleteMapping
-    public String deleteUser(){
-        return "chamei o endpoint como um DELETE!";
+    public String deleteUser(UserRequest request) throws Exception{
+        service.deletarUsuario(request);
+        return "Usuário deletado com sucesso!";
     }
 
     @PutMapping
-    public UserResponse UpdateUser (UserRequest request){
+    public UserResponse UpdateUser (UserRequest request) throws Exception {
         return service.atualizarUsuario(request);
     }
 }

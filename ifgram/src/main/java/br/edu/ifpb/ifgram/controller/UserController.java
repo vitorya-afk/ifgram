@@ -1,44 +1,36 @@
 package br.edu.ifpb.ifgram.controller;
-import java.util.List;
 
-import br.edu.ifpb.ifgram.model.User;
-import br.edu.ifpb.ifgram.repository.UserRepository;
-import org.springframework.web.bind.annotation.*;
-
-import br.edu.ifpb.ifgram.service.UserService;
 import br.edu.ifpb.ifgram.DTO.UserRequest;
 import br.edu.ifpb.ifgram.DTO.UserResponse;
+import br.edu.ifpb.ifgram.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("user")
 public class UserController {
 
-    public final UserService service;
+    private final UserService service;
 
-    public UserController(UserService service){
+    public UserController(UserService service) {
         this.service = service;
     }
-
     @GetMapping
-    public List<UserResponse> getUsers(){
-        List<UserResponse> listaUsuarios = service.buscarTodosUsuarios();
-        return listaUsuarios;
+    public List<UserResponse> getUsers() {
+        return service.buscarTodosUsuarios();
     }
-
     @PostMapping
-    public UserResponse postUser(UserRequest request) throws Exception {
-        UserResponse userResponse = service.criar(request);
-        return userResponse;
+    public UserResponse postUser(@Valid @RequestBody UserRequest request) throws Exception {
+        return service.criar(request);
     }
-
     @DeleteMapping
-    public String deleteUser(UserRequest request) throws Exception{
+    public String deleteUser(@Valid @RequestBody UserRequest request) throws Exception {
         service.deletarUsuario(request);
         return "Usuário deletado com sucesso!";
     }
-
     @PutMapping
-    public UserResponse UpdateUser (UserRequest request) throws Exception {
+    public UserResponse updateUser(@Valid @RequestBody UserRequest request) throws Exception {
         return service.atualizarUsuario(request);
     }
 }

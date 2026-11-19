@@ -23,9 +23,7 @@ public class CommentController {
         return service.criar(request);
     }
     @GetMapping("/post/{postId}")
-    public List<CommentResponse> listarPorPost(
-            @PathVariable Long postId
-    ) {
+    public List<CommentResponse> listarPorPost(@PathVariable Long postId) {
         return service.listarPorPost(postId);
     }
     @DeleteMapping("/{id}")

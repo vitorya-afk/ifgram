@@ -14,10 +14,12 @@ public class LikeController {
     public LikeController(LikeService service) {
         this.service = service;
     }
+
     @PostMapping
     public LikeResponse curtir(@Valid @RequestBody LikeRequest request) {
         return service.curtir(request);
     }
+
     @DeleteMapping("/post/{postId}/usuario/{autorId}")
     public String descurtir(
             @PathVariable Long postId,
@@ -30,6 +32,7 @@ public class LikeController {
     public List<LikeResponse> listarPorPost(@PathVariable Long postId) {
         return service.listarPorPost(postId);
     }
+
     @GetMapping("/post/{postId}/total")
     public long contarPorPost(@PathVariable Long postId) {
         return service.contarPorPost(postId);

@@ -40,4 +40,7 @@ public class PostController {
         service.deletar(id);
         return "Publicação excluída com sucesso!";
     }
+    @GetMapping("/feed/{userId}")
+    public List<PostResponse> listarFeedDoUsuario(@PathVariable Long userId) {
+        return service.listarFeedDoUsuario(userId);}
 }
